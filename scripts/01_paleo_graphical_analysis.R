@@ -21,7 +21,7 @@ paleo_df <- read.csv("./data/paleo_sqlr_all_2023_12_04.csv")
 
 # Fossil use --------------------------------------------------------------
 
-## Figure 2 -----------------------------------------------------------------
+# Figure 2 -----------------------------------------------------------------
 
 ## All publications -------------------------------------------------
 paleo_fossil_df <- paleo_df %>% 
@@ -102,12 +102,14 @@ ggplot(paleo_fossil_df,
         legend.key.size=unit(0.5, "cm"),
         legend.background = element_rect(colour = "black"))
 
-ggsave("./graphs/Fig2_Bloisetal_2col_one_label.pdf",
+ggsave("./graphs/Fig2_Bloisetal_2col_one_label_pre-pub.pdf",
        width = 15, height = 10, units='cm')
 
-# In Illustrator, need to change the percentages font to black and move to the top of each bar
+# Post-processing notes:
+# In Illustrator, need to change the percentages font to black and move to the top of each bar. Also changed stroke size around legend to 0.5pt
+# Output version labeled with "_pre-pub", publication version post-Illustrator has that label removed
 
-## Figure 3 -----------------------------------------------------------------
+# Figure 3 -----------------------------------------------------------------
 
 ## Kingdom -----------------------------------------------------------------
 
@@ -276,16 +278,21 @@ fig3b
 ggsave("./graphs/Fig3b_Bloisetal_2col.pdf",
        width = 15, height = 5, units="cm")
 
-# Compiled Figure 3 --------------------------------------------------------------
+## Compiled Figure 3 --------------------------------------------------------------
 
 fig3a + fig3b + 
   plot_layout(ncol = 1, nrow = 2, widths = c(1, 1), heights = c(1, 1), guide = "keep") 
 
-ggsave("./graphs/Fig3_Bloisetal_2col_nolabels.pdf",
+ggsave("./graphs/Fig3_Bloisetal_2col_nolabels_pre-pub.pdf",
        width = 15, height = 15, units="cm")
 
+# Post-processing note:
+# Move the legend down to the ENM Alone panel
+# Reduced legend box stroke to 0.5pt and trimmed white space in legend
+# Output version labeled with "_pre-pub", publication version post-Illustrator has that label removed
 
-## Figure 4 --------------------------------------------------------
+
+# Figure 4 --------------------------------------------------------
 
 ## Geographic scale - Fig 4a --------------------------------------------------------
 
@@ -469,8 +476,6 @@ paleo_time_bin_df <-  paleo_df %>%
                       "Paleozoic"))
     )
 
-
-
 ### Era Plot - Fig 4b-------------------------------------------------------------
 
 era_df <- paleo_time_bin_df %>% 
@@ -522,7 +527,8 @@ era_summ_df <- era_df %>%
   group_by(era_bin) %>%
   summarise(era_count = sum(n_records))
 
-#With a label of percentage
+# Graphing
+# With a label of percentage
 fig4b <- ggplot(era_summ_df, 
                 aes(y = era_count,
                     fill = era_bin,
@@ -549,11 +555,11 @@ fig4b <- ggplot(era_summ_df,
         legend.title = element_text(size = 12),
         legend.text = element_text(size = 9),
         legend.position = "bottom",
-        legend.key.size=unit(0.5, "cm"),
-        legend.background = element_rect(colour = "black")) 
+        legend.title.position = "bottom",
+        legend.key.size=unit(0.5, "cm")) 
 
 fig4b
-
+# Saving
 ggsave("./graphs/figure_4b_era_pie_inset_label.pdf",
        width = 6, height = 4.5)
 
@@ -641,6 +647,7 @@ fig4c <- ggplot(period_df_mod,
 
 
 fig4c
+#Saving
 ggsave("./graphs/figure_4c_period_bins.pdf",
        width = 6, height = 4.5)
 
@@ -730,7 +737,7 @@ fig4d <- ggplot(quaternary_df,
         legend.background = element_rect(colour = "black"))
 
 fig4d
-
+#Saving
 ggsave("./graphs/figure_4d_quaternary_bins.pdf",
        width = 6, height = 4.5)
 
@@ -739,12 +746,16 @@ ggsave("./graphs/figure_4d_quaternary_bins.pdf",
 fig4a + fig4b + fig4c + fig4d + plot_layout(ncol = 2, nrow = 2, widths = c(1, 1, 1), heights = c(1, 1),
                                             guide = "keep") 
 
-ggsave("./graphs/Fig4_Bloisetal_2col.pdf",
+ggsave("./graphs/Fig4_Bloisetal_2col_pre-pub.pdf",
        width = 16, height = 16, units="cm")
 
-
-# This compiled figure is close. But, needs post-processing to reduce to 15 cm wide and adjust the legends and justification of panel B. And generally condense the text and panels a bit more.
-
+# Post-processing note:
+# This compiled figure is close, but needs a decent amount of post-processing to be publication ready since it is difficult to get the proportions right among the pie-chart vs the other panels
+# Reduced overall size to 15cm wide x 14cm high (set at 16 to help with proportions)
+# Moved labels A) and C) to be left justified, and Pub Count axis title right a few steps to offset labels.
+# move Fossil Use legend to panel C, change stroke size to 0.5pt, and condense for space.
+# Center Geologic Era Panel B legend and move it closer to pie chart, and center pie chart within the panel
+# We also scaled the pie chart so that there was not so much white space around it. See the two versions saved in the graphs folder: '_scaled' and '_unscaled'
 
 # Figure 5 --------------------------------------------------------------
 
@@ -803,7 +814,7 @@ neartime_gg <- paleo_temp_range_df %>%
   geom_point(aes(fill = time_match,
                  shape = time_match),
              size = 2,
-             alpha = 0.7) +
+             alpha = 0.8) +
   
   scale_fill_manual(values = c("#BBDF27FF", "#21908CFF", 
                                "#482576FF", "grey"),
@@ -857,7 +868,7 @@ deeptime_gg <- paleo_temp_range_df %>%
   geom_point(aes(fill = time_match,
                  shape = time_match),
              size = 2,
-             alpha = 0.7) +
+             alpha = 0.8) +
   
   scale_fill_manual(values = c("#BBDF27FF", "#21908CFF", 
                                "#482576FF", "grey"),
@@ -898,5 +909,9 @@ deeptime_gg
 neartime_gg +  deeptime_gg + plot_layout(ncol = 1)
 
 #Saving
-ggsave("./graphs/Fig5_Bloisetal_2col.pdf",
+ggsave("./graphs/Fig5_Bloisetal_2col_pre_pub.pdf",
        width = 15, height = 21, units="cm")
+
+# Post-processing notes:
+# Changed the stroke weight on the points to 0.25
+# Changed overall artboard height to 20 cm and moved the lower panel up a bit to be a bit more condensed.
