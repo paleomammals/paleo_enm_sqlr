@@ -6,6 +6,9 @@ Authors: Jessica L. Blois, André M. Bellvé, Marta A. Jarzyna, Erin E. Saupe, V
 
 Accepted at Paleobiology
 
+
 For more details:
-	Dryad: https://doi.org/10.5061/dryad.m37pvmd9n
-	Zenodo: https://doi.org/10.5281/zenodo.10905847
+	
+Dryad: https://doi.org/10.5061/dryad.m37pvmd9n
+
+Zenodo: https://doi.org/10.5281/zenodo.10905847
